@@ -15,6 +15,8 @@ struct LoginView: View {
     @State private var isPresented = false
     @State private var showingAlert = false
     
+    @State private var homeViewModel = HomeViewModel(repository: BalanceRepositoryImpl())
+    
     var body: some View {
         VStack {
             TextField("Número telefónico", text: $viewModel.phoneNumber)
@@ -46,10 +48,12 @@ struct LoginView: View {
         }
         .padding()
         .fullScreenCover(isPresented: $viewModel.isAuthenticated) {
-            HomeView(isPresented: $isPresented)
+            // Pasar la instancia de HomeViewModel a HomeView
+            HomeView(isPresented: $isPresented, viewModel: homeViewModel)
         }
     }
 }
+
 
 
 

@@ -15,6 +15,9 @@
 		3F15DD2B2BDDED7600876D45 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F15DD2A2BDDED7600876D45 /* HomeView.swift */; };
 		3F15DD302BDE080100876D45 /* DataModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F15DD2F2BDE080100876D45 /* DataModels.swift */; };
 		3F15DD322BDE093800876D45 /* UserRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F15DD312BDE093800876D45 /* UserRepository.swift */; };
+		3F15DD342BDE1E3800876D45 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F15DD332BDE1E3800876D45 /* HomeViewModel.swift */; };
+		3F15DD362BDE1E6000876D45 /* HomeRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F15DD352BDE1E6000876D45 /* HomeRepository.swift */; };
+		3F15DD382BDE1F4B00876D45 /* HomeDataModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F15DD372BDE1F4B00876D45 /* HomeDataModels.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -27,6 +30,10 @@
 		3F15DD2A2BDDED7600876D45 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		3F15DD2F2BDE080100876D45 /* DataModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataModels.swift; sourceTree = "<group>"; };
 		3F15DD312BDE093800876D45 /* UserRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRepository.swift; sourceTree = "<group>"; };
+		3F15DD332BDE1E3800876D45 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
+		3F15DD352BDE1E6000876D45 /* HomeRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeRepository.swift; sourceTree = "<group>"; };
+		3F15DD372BDE1F4B00876D45 /* HomeDataModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeDataModels.swift; sourceTree = "<group>"; };
+		3F15DD3B2BDE3D7900876D45 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,6 +66,7 @@
 		3F15DD182BDDEBD800876D45 /* BankAppDemo */ = {
 			isa = PBXGroup;
 			children = (
+				3F15DD3B2BDE3D7900876D45 /* Info.plist */,
 				3F15DD2E2BDE07E500876D45 /* LoginView */,
 				3F15DD292BDDED6B00876D45 /* HomeView */,
 				3F15DD192BDDEBD900876D45 /* BankAppDemoApp.swift */,
@@ -80,6 +88,9 @@
 			isa = PBXGroup;
 			children = (
 				3F15DD2A2BDDED7600876D45 /* HomeView.swift */,
+				3F15DD332BDE1E3800876D45 /* HomeViewModel.swift */,
+				3F15DD352BDE1E6000876D45 /* HomeRepository.swift */,
+				3F15DD372BDE1F4B00876D45 /* HomeDataModels.swift */,
 			);
 			path = HomeView;
 			sourceTree = "<group>";
@@ -165,11 +176,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3F15DD362BDE1E6000876D45 /* HomeRepository.swift in Sources */,
 				3F15DD1C2BDDEBD900876D45 /* LoginView.swift in Sources */,
 				3F15DD2B2BDDED7600876D45 /* HomeView.swift in Sources */,
+				3F15DD342BDE1E3800876D45 /* HomeViewModel.swift in Sources */,
 				3F15DD322BDE093800876D45 /* UserRepository.swift in Sources */,
 				3F15DD302BDE080100876D45 /* DataModels.swift in Sources */,
 				3F15DD1A2BDDEBD900876D45 /* BankAppDemoApp.swift in Sources */,
+				3F15DD382BDE1F4B00876D45 /* HomeDataModels.swift in Sources */,
 				3F15DD282BDDEC0700876D45 /* LoginViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -307,11 +321,11 @@
 				DEVELOPMENT_TEAM = 6H2ZQFKHC2;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = BankAppDemo/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -336,11 +350,11 @@
 				DEVELOPMENT_TEAM = 6H2ZQFKHC2;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = BankAppDemo/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

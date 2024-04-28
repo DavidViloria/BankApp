@@ -19,7 +19,7 @@ protocol UserRepository {
 
 
 class UserRepositoryImpl: UserRepository {
-    private let url = URL(string: "/citibank-api/authentication/login")!
+    private let url = URL(string: "http://demo4617109.mockable.io/citibank-api/authentication/login")!
     private let apiKey = "CITI-HM13FJ345"
     
     func login(request: LoginRequest) -> AnyPublisher<LoginResponse, Error> {
