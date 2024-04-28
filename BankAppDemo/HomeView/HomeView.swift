@@ -11,16 +11,19 @@ import Combine
 struct HomeView: View {
     @Binding var isPresented: Bool
     @State var showMenu = false
+    @ObservedObject var viewModel: HomeViewModel
+    @ObservedObject var viewModelLogin = LoginViewModel()
+
 
     var body: some View {
         NavigationView {
             ZStack {
                 VStack {
-                    Text("Bienvenido Ricardo")
+                    Text("Bienvenido \(viewModelLogin.phoneNumber)")
                         .font(.headline)
                     Text("Tu saldo es")
                         .font(.headline)
-                    Text("$ 1,203.56")
+                    Text("\(viewModel.currency) \(viewModel.balance, specifier: "%.2f")")
                         .font(.title)
                     Spacer()
                 }
@@ -42,9 +45,14 @@ struct HomeView: View {
                         .imageScale(.large)
                 }
             ))
+            .onAppear {
+                viewModel.getBalance(for: viewModelLogin.phoneNumber)
+            }
         }
     }
 }
+
+
 
 struct MenuView: View {
     @Binding var showMenu: Bool
