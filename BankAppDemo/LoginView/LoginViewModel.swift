@@ -38,16 +38,21 @@ class LoginViewModel: ObservableObject {
                 .sink { completion in
                     switch completion {
                     case .failure(let error):
-                        if (error as? URLError)?.code == .badServerResponse {
+                        if let apiError = error as? APIError {
+                            switch apiError {
+                            case .authenticationError:
+                                self.errorMessage = "Error de autenticación. Por favor, verifica que tu número de teléfono y contraseña sean correctos."
+                            case .userBlocked:
+                                self.errorMessage = "Usuario bloqueado. Por favor, contacta con el soporte."
+                            }
+                        } else if (error as? URLError)?.code == .badServerResponse {
                             self.errorMessage = "Hubo un error con la API. Por favor, inténtalo de nuevo más tarde."
-                        } else if (error as? URLError)?.code == .userAuthenticationRequired {
-                            self.errorMessage = "Por favor, verifica que tu número de teléfono y contraseña sean correctos."
                         }
                     case .finished:
                         break
                     }
-                } receiveValue: { isAuthenticated in
-                    if isAuthenticated {
+                } receiveValue: { loginResponse in
+                    if loginResponse.code == "0" {
                         self.isAuthenticated = true
                     }
                 }
@@ -57,6 +62,7 @@ class LoginViewModel: ObservableObject {
             errorMessage = "Por favor, completa todos los campos correctamente."
         }
     }
+
 
 
 }

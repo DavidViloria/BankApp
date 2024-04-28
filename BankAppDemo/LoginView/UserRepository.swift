@@ -8,16 +8,21 @@
 import Foundation
 import Combine
 
+enum APIError: Int, Error {
+    case authenticationError = 4001
+    case userBlocked = 4002
+}
 
 protocol UserRepository {
-    func login(request: LoginRequest) -> AnyPublisher<Bool, Error>
+    func login(request: LoginRequest) -> AnyPublisher<LoginResponse, Error>
 }
+
 
 class UserRepositoryImpl: UserRepository {
     private let url = URL(string: "/citibank-api/authentication/login")!
     private let apiKey = "CITI-HM13FJ345"
     
-    func login(request: LoginRequest) -> AnyPublisher<Bool, Error> {
+    func login(request: LoginRequest) -> AnyPublisher<LoginResponse, Error> {
         var urlRequest = URLRequest(url: url)
         urlRequest.httpMethod = "POST"
         urlRequest.addValue(apiKey, forHTTPHeaderField: "API-KEY")
@@ -31,13 +36,18 @@ class UserRepositoryImpl: UserRepository {
                 }
                 let loginResponse = try JSONDecoder().decode(LoginResponse.self, from: data)
                 guard loginResponse.code == "0" else {
-                    throw URLError(.userAuthenticationRequired)
+                    if let errorCode = Int(loginResponse.code), let error = APIError(rawValue: errorCode) {
+                        throw error
+                    } else {
+                        throw URLError(.badServerResponse)
+                    }
                 }
-                return true
+                return loginResponse
             }
             .receive(on: DispatchQueue.main)
             .eraseToAnyPublisher()
     }
+
 
 }
 
