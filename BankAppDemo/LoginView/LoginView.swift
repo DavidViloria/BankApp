@@ -20,37 +20,26 @@ struct LoginView: View {
             TextField("Número telefónico", text: $viewModel.phoneNumber)
                 .textFieldStyle(RoundedBorderTextFieldStyle())
                 .padding()
-                .onReceive(Just(viewModel.phoneNumber)) { newValue in
-                    if newValue.count > 10 {
-                        viewModel.phoneNumber = String(newValue.prefix(10))
-                    }
-                }
             
             SecureField("Contraseña", text: $viewModel.password)
                 .textFieldStyle(RoundedBorderTextFieldStyle())
                 .padding()
-                .onReceive(Just(viewModel.password)) { newValue in
-                    if newValue.count > 16 {
-                        viewModel.password = String(newValue.prefix(16))
-                    }
-                }
             
             Button(action: {
-                if viewModel.login() {
-                } else {
+                viewModel.login()
+                if viewModel.errorMessage != nil {
                     self.showingAlert = true
                 }
             }) {
                 Text("Iniciar Sesión")
                     .padding()
                     .foregroundColor(.white)
-                    .background(viewModel.validateInput() ? Color.blue : Color.gray)
+                    .background(Color.blue)
                     .cornerRadius(8)
             }
             .padding()
-            .disabled(!viewModel.validateInput())
             .alert(isPresented: $showingAlert) {
-                Alert(title: Text("Error de autenticación"), message: Text("Verifica que tus credenciales sean correctas"), dismissButton: .default(Text("Aceptar")))
+                Alert(title: Text("Error de autenticación"), message: Text(viewModel.errorMessage ?? ""), dismissButton: .default(Text("Aceptar")))
             }
             
             Spacer()
@@ -61,6 +50,8 @@ struct LoginView: View {
         }
     }
 }
+
+
 
 
 

@@ -9,23 +9,6 @@
 import SwiftUI
 import Combine
 
-
-protocol UserRepository {
-    func login(phoneNumber: String, password: String) -> AnyPublisher<Bool, Never>
-}
-
-class UserRepositoryImpl: UserRepository {
-    func login(phoneNumber: String, password: String) -> AnyPublisher<Bool, Never> {
-        // Aquí es donde harías la llamada a la API o accederías a la base de datos
-        return Future { promise in
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                promise(.success(true))
-            }
-        }
-        .eraseToAnyPublisher()
-    }
-}
-
 class LoginViewModel: ObservableObject {
     @Published var phoneNumber: String = ""
     @Published var password: String = ""
@@ -38,7 +21,6 @@ class LoginViewModel: ObservableObject {
     init(userRepository: UserRepository = UserRepositoryImpl()) {
         self.userRepository = userRepository
     }
-    
     func validateInput() -> Bool {
         let phoneRegex = "\\d{10}" // Expresión regular para verificar 10 dígitos
         let passwordRegex = "^.{8,16}$" // Expresión regular para verificar 8-16 caracteres
@@ -48,24 +30,39 @@ class LoginViewModel: ObservableObject {
         
         return phonePredicate.evaluate(with: phoneNumber) && passwordPredicate.evaluate(with: password)
     }
-    
-    // Función para iniciar sesión
-    func login() -> Bool {
+
+    func login() {
         if validateInput() {
-            userRepository.login(phoneNumber: phoneNumber, password: password)
-                .sink { isAuthenticated in
+            let request = LoginRequest(user: phoneNumber, password: password)
+            userRepository.login(request: request)
+                .sink { completion in
+                    switch completion {
+                    case .failure(let error):
+                        if (error as? URLError)?.code == .badServerResponse {
+                            self.errorMessage = "Hubo un error con la API. Por favor, inténtalo de nuevo más tarde."
+                        } else if (error as? URLError)?.code == .userAuthenticationRequired {
+                            self.errorMessage = "Por favor, verifica que tu número de teléfono y contraseña sean correctos."
+                        }
+                    case .finished:
+                        break
+                    }
+                } receiveValue: { isAuthenticated in
                     if isAuthenticated {
                         self.isAuthenticated = true
-                    } else {
-                        self.errorMessage = "Por favor, complete todos los campos correctamente."
                     }
                 }
                 .store(in: &cancellables)
-            return true
+            self.isAuthenticated = true
         } else {
-            return false
+            errorMessage = "Por favor, completa todos los campos correctamente."
         }
     }
+
+
 }
+
+
+
+
 
 
