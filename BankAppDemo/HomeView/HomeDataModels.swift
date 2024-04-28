@@ -19,3 +19,8 @@ struct BalanceData: Codable {
     let balance: Double
     let currency: String
 }
+
+struct BankMovement: Identifiable {
+    let id = UUID()
+    let description: String
+}

@@ -13,24 +13,30 @@ struct HomeView: View {
     @State var showMenu = false
     @ObservedObject var viewModel: HomeViewModel
     @ObservedObject var viewModelLogin = LoginViewModel()
-
-
+    var username: String
+    
+    
     var body: some View {
         NavigationView {
             ZStack {
                 VStack {
-                    Text("Bienvenido \(viewModelLogin.phoneNumber)")
+                    Text("Bienvenido \(username)")
                         .font(.headline)
                     Text("Tu saldo es")
                         .font(.headline)
                     Text("\(viewModel.currency) \(viewModel.balance, specifier: "%.2f")")
                         .font(.title)
+                    
+                    List(viewModel.movements) { movement in
+                        Text(movement.description)
+                    }
+                    
                     Spacer()
                 }
                 .padding()
                 .blur(radius: showMenu ? 20 : 0)
                 .animation(.default)
-
+                
                 if showMenu {
                     MenuView(showMenu: $showMenu)
                 }
@@ -56,7 +62,7 @@ struct HomeView: View {
 
 struct MenuView: View {
     @Binding var showMenu: Bool
-
+    
     var body: some View {
         VStack(alignment: .leading) {
             Button(action: {

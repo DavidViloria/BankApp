@@ -49,7 +49,7 @@ struct LoginView: View {
         .padding()
         .fullScreenCover(isPresented: $viewModel.isAuthenticated) {
             // Pasar la instancia de HomeViewModel a HomeView
-            HomeView(isPresented: $isPresented, viewModel: homeViewModel)
+            HomeView(isPresented: $isPresented, viewModel: homeViewModel, username: viewModel.phoneNumber)
         }
     }
 }

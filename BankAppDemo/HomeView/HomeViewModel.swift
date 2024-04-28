@@ -11,11 +11,18 @@ import Combine
 class HomeViewModel: ObservableObject {
     @Published var balance: Double = 0.0
     @Published var currency: String = ""
+    @Published var movements: [BankMovement] = []
     private var repository: BalanceRepository
     private var cancellables = Set<AnyCancellable>()
     
     init(repository: BalanceRepository = BalanceRepositoryImpl()) {
         self.repository = repository
+        self.movements = [
+                    BankMovement(description: "Envio de dinero X"),
+                    BankMovement(description: "Pago de Izzi"),
+                    BankMovement(description: "Recibiste dinero"),
+                    // Agrega aquí más movimientos de prueba
+                ]
     }
     
     func getBalance(for user: String) {

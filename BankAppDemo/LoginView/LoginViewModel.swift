@@ -32,6 +32,7 @@ class LoginViewModel: ObservableObject {
     }
 
     func login() {
+        self.errorMessage = nil
         if validateInput() {
             let request = LoginRequest(user: phoneNumber, password: password)
             userRepository.login(request: request)
