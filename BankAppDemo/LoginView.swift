@@ -12,35 +12,46 @@ import Combine
 
 struct LoginView: View {
     @ObservedObject var viewModel = LoginViewModel()
-    @State private var isPresented = false // Controla la presentación de la pantalla de inicio
+    @State private var isPresented = false
+    @State private var showingAlert = false
     
     var body: some View {
         VStack {
             TextField("Número telefónico", text: $viewModel.phoneNumber)
                 .textFieldStyle(RoundedBorderTextFieldStyle())
                 .padding()
+                .onReceive(Just(viewModel.phoneNumber)) { newValue in
+                    if newValue.count > 10 {
+                        viewModel.phoneNumber = String(newValue.prefix(10))
+                    }
+                }
             
             SecureField("Contraseña", text: $viewModel.password)
                 .textFieldStyle(RoundedBorderTextFieldStyle())
                 .padding()
-            
-            if let errorMessage = viewModel.errorMessage {
-                Text(errorMessage)
-                    .foregroundColor(.red)
-                    .padding()
-            }
+                .onReceive(Just(viewModel.password)) { newValue in
+                    if newValue.count > 16 {
+                        viewModel.password = String(newValue.prefix(16))
+                    }
+                }
             
             Button(action: {
-                viewModel.login()
+                if viewModel.login() {
+                } else {
+                    self.showingAlert = true
+                }
             }) {
                 Text("Iniciar Sesión")
                     .padding()
                     .foregroundColor(.white)
-                    .background(viewModel.validateInput() ? Color.blue : Color.gray) // Validación en el botón
+                    .background(viewModel.validateInput() ? Color.blue : Color.gray)
                     .cornerRadius(8)
             }
             .padding()
-            .disabled(!viewModel.validateInput()) // Validación para deshabilitar el botón
+            .disabled(!viewModel.validateInput())
+            .alert(isPresented: $showingAlert) {
+                Alert(title: Text("Error de autenticación"), message: Text("Verifica que tus credenciales sean correctas"), dismissButton: .default(Text("Aceptar")))
+            }
             
             Spacer()
         }
@@ -50,6 +61,8 @@ struct LoginView: View {
         }
     }
 }
+
+
 
 
 
