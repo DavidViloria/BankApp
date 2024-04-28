@@ -21,6 +21,18 @@ class HomeViewModel: ObservableObject {
                     BankMovement(description: "Envio de dinero X"),
                     BankMovement(description: "Pago de Izzi"),
                     BankMovement(description: "Recibiste dinero"),
+                    BankMovement(description: "Envio de dinero X"),
+                    BankMovement(description: "Pago de Izzi"),
+                    BankMovement(description: "Recibiste dinero"),
+                    BankMovement(description: "Envio de dinero X"),
+                    BankMovement(description: "Pago de Izzi"),
+                    BankMovement(description: "Recibiste dinero"),
+                    BankMovement(description: "Envio de dinero X"),
+                    BankMovement(description: "Pago de Izzi"),
+                    BankMovement(description: "Recibiste dinero"),
+                    BankMovement(description: "Envio de dinero X"),
+                    BankMovement(description: "Pago de Izzi"),
+                    BankMovement(description: "Recibiste dinero"),
                     // Agrega aquí más movimientos de prueba
                 ]
     }

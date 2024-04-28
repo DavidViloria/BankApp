@@ -15,20 +15,49 @@ struct HomeView: View {
     @ObservedObject var viewModelLogin = LoginViewModel()
     var username: String
     
-    
     var body: some View {
         NavigationView {
             ZStack {
                 VStack {
+                    Image(systemName: "person.circle")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 100, height: 100)
+                        .padding()
                     Text("Bienvenido \(username)")
                         .font(.headline)
                     Text("Tu saldo es")
                         .font(.headline)
                     Text("\(viewModel.currency) \(viewModel.balance, specifier: "%.2f")")
                         .font(.title)
-                    
+                    HStack{
+                        Button(action: {
+                            // Acción para transferir dinero
+                        }) {
+                            Text("$ Transferir")
+                                .padding()
+                                .foregroundColor(.white)
+                                .background(Color.blue)
+                                .cornerRadius(8)
+                        }
+                        .padding()
+                        
+                        Button(action: {
+                            // Acción para ver detalles de la cuenta
+                        }) {
+                            Text("Mi cuenta")
+                                .padding()
+                                .foregroundColor(.white)
+                                .background(Color.blue)
+                                .cornerRadius(8)
+                        }
+                        .padding()
+                    }
                     List(viewModel.movements) { movement in
                         Text(movement.description)
+                    }.refreshable {
+                        viewModel.getBalance(for: viewModelLogin.phoneNumber)
+                        
                     }
                     
                     Spacer()
@@ -57,6 +86,7 @@ struct HomeView: View {
         }
     }
 }
+
 
 
 
